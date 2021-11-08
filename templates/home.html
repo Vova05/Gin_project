@@ -1,0 +1,18 @@
+{{ template "header.html" }}
+<h1> {{ .title}}</h1>
+<div>
+    <p>{{ .text_about_bank }}</p>
+    {{ range .commercial_offers}}
+    <div class="card">
+        <h3 class="card-header"> {{ .Title}}</h3>
+        <div class="card-body">
+            <!--<h4 class="card-title">Special title treatment</h4>-->
+            <p class="card-text"> {{ .Body}}</p>
+            <h3 style="font-weight: bold">{{ .Price}}</h3>
+            <a href= "/view_bank" class="btn btn-primary">Go home</a>
+        </div>
+    </div>
+    <br>
+    {{end}}
+</div>
+{{ template "footer.html" }}

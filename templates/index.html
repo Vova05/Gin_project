@@ -1,0 +1,17 @@
+{{ template "header.html" }}
+{{range .notes}}
+<div class="album py-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <h3>
+                {{ .Title}}
+            </h3>
+            <p>
+                {{ .Body }}
+            </p>
+        </div>
+    </div>
+
+</div>
+{{end}}
+{{ template "footer.html" }}

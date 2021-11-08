@@ -57,3 +57,34 @@ func (note *Note) Fetch(id string) (*Note, error) {
 		&note.Id, &note.Title, &note.Body, &note.CreatedAt, &note.UpdatedAt)
 	return note, err
 }
+
+type CommercialOffers struct {
+	Id        int       `json:"id"`
+	Title     string    `json:"title"`
+	Body      string    `json:"body"`
+	Price	  float64	`json:"price"`
+	Link 	  string	`json:"link"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+func (commercialOffers *CommercialOffers) GetAllCommercialOffers() ([]CommercialOffers, error) {
+	rows, err := config.DB.Query("SELECT * FROM CommercialOffers")
+	allCommercialOffers := []CommercialOffers{}
+	if err == nil {
+		for rows.Next() {
+			var currentCommercialOffers CommercialOffers
+			rows.Scan(
+				&currentCommercialOffers.Id,
+				&currentCommercialOffers.Title,
+				&currentCommercialOffers.Body,
+				&currentCommercialOffers.Price,
+				&currentCommercialOffers.CreatedAt,
+				&currentCommercialOffers.UpdatedAt,
+				&currentCommercialOffers.Link)
+			allCommercialOffers = append(allCommercialOffers, currentCommercialOffers)
+		}
+		return allCommercialOffers, err
+	}
+	return allCommercialOffers, err
+}

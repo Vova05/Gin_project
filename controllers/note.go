@@ -3,6 +3,7 @@ package controllers
 import (
 	"Gin_project/models"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 )
 type  NoteController struct {
@@ -25,24 +26,7 @@ func (c *NoteController) Test(ctx *gin.Context){
 	}
 	ctx.HTML(http.StatusOK,"header.html", dataH)
 }
-func (_ *NoteController) CreateNewNote(c *gin.Context) {
-	var params models.NoteParams
-	var note models.Note
-	err := c.BindJSON(&params)
-	if err == nil {
-		_, creationError := note.Create(params)
-		if creationError == nil {
-			c.JSON(http.StatusCreated, gin.H{
-				"message": "Note created successfully",
-				"note": note,
-			})
-		} else {
-			c.String(http.StatusInternalServerError, creationError.Error())
-		}
-	} else {
-		c.String(http.StatusInternalServerError, err.Error())
-	}
-}
+
 func (_ *NoteController) GetAllNotes(c *gin.Context) {
 	var note models.Note
 	notes, err := note.GetAll()
@@ -90,6 +74,51 @@ func (_ *NoteController)  GetHome(c *gin.Context){
 
 		}
 		c.HTML(http.StatusOK,"home.html", data)
+	} else {
+		c.String(http.StatusInternalServerError, err.Error())
+	}
+}
+
+func (_ *NoteController) SaveConsultation(c *gin.Context){
+//r.FormValue()
+	name, _ := c.GetPostForm("Name")
+	phone, _ := c.GetPostForm("Phone")
+	message, _ := c.GetPostForm("Message")
+	var employeeName2 = "name"
+	//var data  models.DataConsultation
+	var add *models.DataConsultation
+	data := models.DataConsultation{name,phone,message,employeeName2}
+	add_data, err :=add.PostConsultation(data)
+	//AddData
+	//Data := &models.DataConsultation{name,phone,message}
+	//log.Println(data)
+	log.Println(add_data)
+	log.Println(err)
+}
+
+func (_ *NoteController)  GetIndex(c *gin.Context){
+	data := gin.H{
+		"title": "Index",
+
+	}
+	c.HTML(http.StatusOK,"index.html", data)
+
+}
+func (_ *NoteController) CreateNewNote(c *gin.Context) {
+	var params models.NoteParams
+	var note models.Note
+	err := c.BindJSON(&params)
+	if err == nil {
+		_, creationError := note.Create(params)
+
+		if creationError == nil {
+			c.JSON(http.StatusCreated, gin.H{
+				"message": "Note created successfully",
+				"note": note,
+			})
+		} else {
+			c.String(http.StatusInternalServerError, creationError.Error())
+		}
 	} else {
 		c.String(http.StatusInternalServerError, err.Error())
 	}

@@ -16,23 +16,7 @@ type NoteParams struct {
 	Title string
 	Body  string
 }
-func (note *Note) Create(data NoteParams) (*Note, error) {
-	var created_at = time.Now().UTC()
-	var updated_at = time.Now().UTC()
-	statement, _ := config.DB.Prepare("INSERT INTO notes (title, body, created_at, updated_at) VALUES (?, ?, ?, ?)")
-	result, err := statement.Exec(data.Title, data.Body, created_at, updated_at)
-	if err == nil {
-		id, _ := result.LastInsertId()
-		note.Id = int(id)
-		note.Title = data.Title
-		note.Body = data.Body
-		note.CreatedAt = created_at
-		note.UpdatedAt = updated_at
-		return note, err
-	}
-	log.Println("Unable to create note", err.Error())
-	return note, err
-}
+
 func (note *Note) GetAll() ([]Note, error) {
 	rows, err := config.DB.Query("SELECT * FROM notes")
 	allNotes := []Note{}
@@ -87,4 +71,42 @@ func (commercialOffers *CommercialOffers) GetAllCommercialOffers() ([]Commercial
 		return allCommercialOffers, err
 	}
 	return allCommercialOffers, err
+}
+
+type DataConsultation struct {
+	Name    string
+	Phone      string
+	Message	  string
+	EmployeeName	string
+}
+
+
+
+func (data *DataConsultation) PostConsultation(dataConsultation DataConsultation) (*DataConsultation,error){
+
+	var created_at = time.Now().UTC()
+	var updated_at = time.Now().UTC()
+	statement, _ := config.DB.Prepare("INSERT INTO consultations (client_name, client_telephone, client_message,employee_name,created_at, updated_at) VALUES (?, ?, ?, ?,?,?)")
+	_ , err := statement.Exec(dataConsultation.Name,dataConsultation.Phone,dataConsultation.Message,dataConsultation.EmployeeName, created_at, updated_at)
+
+	//log.Println("Unable to create note", err.Error())
+	return &dataConsultation, err
+
+}
+func (note *Note) Create(data NoteParams) (*Note, error) {
+	var created_at = time.Now().UTC()
+	var updated_at = time.Now().UTC()
+	statement, _ := config.DB.Prepare("INSERT INTO notes (title, body, created_at, updated_at) VALUES (?, ?, ?, ?)")
+	result, err := statement.Exec(data.Title, data.Body, created_at, updated_at)
+	if err == nil {
+		id, _ := result.LastInsertId()
+		note.Id = int(id)
+		note.Title = data.Title
+		note.Body = data.Body
+		note.CreatedAt = created_at
+		note.UpdatedAt = updated_at
+		return note, err
+	}
+	log.Println("Unable to create note", err.Error())
+	return note, err
 }

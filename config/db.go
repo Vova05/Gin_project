@@ -8,6 +8,6 @@ var DB *sql.DB
 func InitializeDB() (*sql.DB, error) {
 	// Initialize connection to the database
 	var err error
-	DB, err = sql.Open("mysql", "root:1234@/productdb")
+	DB, err = sql.Open("mysql", "root:1234@/Kurs5")
 	return DB, err
 }

@@ -16,7 +16,7 @@ func main() {
 
 		server := gin.New()
 
-		var noteController controllers.NoteController
+		var noteController controllers.Controller
 
 		server.Static("/css","./templates/css")
 		server.Static("/js","./templates/js")
@@ -34,6 +34,7 @@ func main() {
 			view_page.Static("/images","./templates/images")
 			view_page.GET("/index",noteController.GetIndex)
 			view_page.POST("/index_save", noteController.SaveConsultation)
+
 		}
 
 		//main_groupe := server.Group("/note",gin.Recovery(),middlewares.Logger(), middlewares.BasicAuth(), gindump.Dump())

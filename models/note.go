@@ -1,6 +1,8 @@
 package models
+
 import (
 	"Gin_project/config"
+	_ "image"
 	"log"
 	"time"
 	//"github.com/username/notes_api_layered/config"
@@ -110,3 +112,66 @@ func (note *Note) Create(data NoteParams) (*Note, error) {
 	log.Println("Unable to create note", err.Error())
 	return note, err
 }
+
+//image
+
+//func (img1 *ImageJpg)WriteImage() []ImageJpg{
+//	//tmp_path:="2.jpg"
+//	//path :="C:\\Users\\VovaGlh\\Downloads\\"+tmp_path
+//	//m, err := os.Open(path)
+//	//if err != nil {
+//	//	log.Println(err)
+//	//}
+//	//imeg, _, err := image.Decode(m)
+//	//if err != nil {
+//	//	log.Println(err)
+//	//}
+//	//
+//	//buffer := new(bytes.Buffer)
+//	//if err := jpeg.Encode(buffer, imeg, nil)
+//	//	err != nil {
+//	//	log.Println("unable to encode image.")
+//	//}
+//	//
+//	//return imeg
+//
+//
+//
+//	//w.Set("Content-Type", "image/jpeg")
+//	//w.Set("Content-Length", strconv.Itoa(len(buffer.Bytes())))
+//	//w.Header().Set("Content-Type", "image/jpeg")
+//	//w.Header().Set("Content-Length", strconv.Itoa(len(buffer.Bytes())))
+//	//if _, err := w.Writer.Write(buffer.Bytes()); err != nil {
+//	//	log.Println("unable to write image.")
+//	//}
+//	var str[] ImageJpg
+//	for i:=2;i<3;i++{
+//		tmp :=strconv.Itoa(i)
+//		tmp_path:=tmp+".jpg"
+//		log.Println(tmp_path)
+//		path :="C:\\Users\\VovaGlh\\Downloads\\"+tmp_path
+//		m, err := os.Open(path)
+//		if err != nil {
+//			log.Println(err)
+//		}
+//		img, _, err := image.Decode(m)
+//		if err != nil {
+//			log.Println(err)
+//		}
+//
+//		//var img image.Image = imeg
+//		buffer := new(bytes.Buffer)
+//		if err := jpeg.Encode(buffer, img, nil); err != nil {
+//			log.Fatalln("unable to encode image.")
+//		}
+//
+//		ImageTmp:=ImageJpg{ImageData: base64.StdEncoding.EncodeToString(buffer.Bytes())}
+//		str =append(str,ImageTmp)
+//	}
+//
+//	return str
+//}
+//
+//type ImageJpg struct {
+//	ImageData string
+//}

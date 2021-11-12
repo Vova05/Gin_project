@@ -172,7 +172,7 @@
 		</ul>
 		<div class="main-slider-carousel owl-carousel owl-theme">
             
-            <div class="slide" style="background-image: url(images/main-slider/image-1.jpg)">
+            <div class="slide" style="background-image: url(images/main-slider/bank.jpg)">
 				<div class="auto-container">
 					
 					<!-- Content Column -->
@@ -190,7 +190,7 @@
 				</div>
 			</div>
 			
-			<div class="slide" style="background-image: url(images/main-slider/image-1.jpg)">
+			<div class="slide" style="background-image: url(images/main-slider/bank.jpg)">
 				<div class="auto-container">
 					
 					<!-- Content Column -->
@@ -208,7 +208,7 @@
 				</div>
 			</div>
 			
-			<div class="slide" style="background-image: url(images/main-slider/image-1.jpg)">
+			<div class="slide" style="background-image: url(images/main-slider/bank.jpg)">
 				<div class="auto-container">
 					
 					<!-- Content Column -->
@@ -572,9 +572,9 @@
 					
 					<!-- Default Form -->
 					<div class="default-form">
-
+						<form action="/view_bank/index_save" method="post" >
 							<div class="row clearfix">
-								<form action="/view_bank/index_save" method="post" >
+
 								<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 									<input type="text" name="Name" id="Name" placeholder="Name">
 								</div>
@@ -597,11 +597,11 @@
 									 <textarea name="Message" placeholder="Message"></textarea>
 								</div>
 
-									<button>post</button>
 
-								<!--<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+
+								<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 									<button class="theme-btn btn-style-two" type="submit" name="submit-form"><span class="txt">Submit Now <i class="arrow flaticon-right"></i></span></button>
-								</div>-->
+								</div>
 
 							</div>
 						</form>
@@ -626,40 +626,20 @@
 				<div class="single-item-carousel owl-carousel owl-theme">
 					
 					<!-- Testimonial Block -->
+					{{ range .CustomersReviews}}
 					<div class="testimonial-block">
 						<div class="inner-box">
 							<div class="author-image">
-								<img src="images/resource/author-1.png" alt="" />
+								<img src="data:image/jpg;base64,{{ .ImageCustomer }}" alt="">
 							</div>
 							<span class="quote-icon flaticon-quote-1"></span>
-							<div class="text">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil rentoa molestiae conseruatur vela illum qui dolorem eum fugiat ruo voluetas nulla ariatur minima veniam.</div>
-							<div class="name">Kevin Peterson</div>
+							<div class="text">{{ .Feedback }}</div>
+							<div class="name">{{ .Name}}</div>
 						</div>
 					</div>
-					
-					<!-- Testimonial Block -->
-					<div class="testimonial-block">
-						<div class="inner-box">
-							<div class="author-image">
-								<img src="images/resource/author-1.png" alt="" />
-							</div>
-							<span class="quote-icon flaticon-quote-1"></span>
-							<div class="text">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil rentoa molestiae conseruatur vela illum qui dolorem eum fugiat ruo voluetas nulla ariatur minima veniam.</div>
-							<div class="name">Kevin Peterson</div>
-						</div>
-					</div>
-					
-					<!-- Testimonial Block -->
-					<div class="testimonial-block">
-						<div class="inner-box">
-							<div class="author-image">
-								<img src="images/resource/author-1.png" alt="" />
-							</div>
-							<span class="quote-icon flaticon-quote-1"></span>
-							<div class="text">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil rentoa molestiae conseruatur vela illum qui dolorem eum fugiat ruo voluetas nulla ariatur minima veniam.</div>
-							<div class="name">Kevin Peterson</div>
-						</div>
-					</div>
+					{{ end}}
+
+
 					
 				</div>
 			</div>
@@ -678,16 +658,13 @@
 			<div class="inner-container">
 				<div class="sponsors-outer">
 					<!--Sponsors Carousel-->
+
 					<ul class="sponsors-carousel owl-carousel owl-theme">
-						<li class="slide-item"><figure class="image-box"><a href="#"><img src="images/clients/1.png" alt=""></a></figure></li>
-						<li class="slide-item"><figure class="image-box"><a href="#"><img src="images/clients/2.png" alt=""></a></figure></li>
-						<li class="slide-item"><figure class="image-box"><a href="#"><img src="images/clients/3.png" alt=""></a></figure></li>
-						<li class="slide-item"><figure class="image-box"><a href="#"><img src="images/clients/4.png" alt=""></a></figure></li>
-						<li class="slide-item"><figure class="image-box"><a href="#"><img src="images/clients/1.png" alt=""></a></figure></li>
-						<li class="slide-item"><figure class="image-box"><a href="#"><img src="images/clients/2.png" alt=""></a></figure></li>
-						<li class="slide-item"><figure class="image-box"><a href="#"><img src="images/clients/3.png" alt=""></a></figure></li>
-						<li class="slide-item"><figure class="image-box"><a href="#"><img src="images/clients/4.png" alt=""></a></figure></li>
+						{{ range .ImageLogo}}
+						<li class="slide-item"><figure class="image-box"><a href="#"><img src="data:image/jpg;base64,{{ .ImageLogo }}" alt=""></a></figure></li>
+						{{ end }}
 					</ul>
+
 				</div>
 			</div>
 		</div>

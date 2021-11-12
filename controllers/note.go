@@ -2,15 +2,21 @@ package controllers
 
 import (
 	"Gin_project/models"
+	"bytes"
+	"encoding/base64"
 	"github.com/gin-gonic/gin"
+	"image"
+	"image/jpeg"
+	_ "image/jpeg"
 	"log"
 	"net/http"
+	"os"
 )
-type  NoteController struct {
+type  Controller struct {
 
 }
 
-func (c *NoteController) Test(ctx *gin.Context){
+func (c *Controller) Test(ctx *gin.Context){
 	var note models.Note
 	notes, err := note.GetAll()
 	if err == nil{
@@ -27,7 +33,7 @@ func (c *NoteController) Test(ctx *gin.Context){
 	ctx.HTML(http.StatusOK,"header.html", dataH)
 }
 
-func (_ *NoteController) GetAllNotes(c *gin.Context) {
+func (_ *Controller) GetAllNotes(c *gin.Context) {
 	var note models.Note
 	notes, err := note.GetAll()
 	if err == nil {
@@ -50,7 +56,7 @@ func (_ *NoteController) GetAllNotes(c *gin.Context) {
 	//		)
 
 }
-func (_ *NoteController) GetSingleNote(c *gin.Context) {
+func (_ *Controller) GetSingleNote(c *gin.Context) {
 	var note models.Note
 	id := c.Param("note_id")
 	_, err := note.Fetch(id)
@@ -64,7 +70,7 @@ func (_ *NoteController) GetSingleNote(c *gin.Context) {
 	}
 }
 
-func (_ *NoteController)  GetHome(c *gin.Context){
+func (_ *Controller)  GetHome(c *gin.Context){
 	var commercialOffer models.CommercialOffers
 	commercialOffers, err := commercialOffer.GetAllCommercialOffers()
 	if err == nil {
@@ -79,7 +85,7 @@ func (_ *NoteController)  GetHome(c *gin.Context){
 	}
 }
 
-func (_ *NoteController) SaveConsultation(c *gin.Context){
+func (_ *Controller) SaveConsultation(c *gin.Context){
 //r.FormValue()
 	name, _ := c.GetPostForm("Name")
 	phone, _ := c.GetPostForm("Phone")
@@ -96,15 +102,8 @@ func (_ *NoteController) SaveConsultation(c *gin.Context){
 	log.Println(err)
 }
 
-func (_ *NoteController)  GetIndex(c *gin.Context){
-	data := gin.H{
-		"title": "Index",
 
-	}
-	c.HTML(http.StatusOK,"index.html", data)
-
-}
-func (_ *NoteController) CreateNewNote(c *gin.Context) {
+func (_ *Controller) CreateNewNote(c *gin.Context) {
 	var params models.NoteParams
 	var note models.Note
 	err := c.BindJSON(&params)
@@ -122,4 +121,29 @@ func (_ *NoteController) CreateNewNote(c *gin.Context) {
 	} else {
 		c.String(http.StatusInternalServerError, err.Error())
 	}
+}
+
+//Image work
+// writeImage encodes an image 'img' in jpeg format and writes it into ResponseWriter.
+func writeImage() string{
+
+	tmp_path:="3.jpg"
+	path :="C:\\Users\\VovaGlh\\Downloads\\"+tmp_path
+	m, err := os.Open(path)
+	if err != nil {
+		log.Println(err)
+	}
+	img, _, err := image.Decode(m)
+	if err != nil {
+		log.Println(err)
+	}
+
+	//var img image.Image = imeg
+	buffer := new(bytes.Buffer)
+	if err := jpeg.Encode(buffer, img, nil); err != nil {
+		log.Fatalln("unable to encode image.")
+	}
+
+	str := base64.StdEncoding.EncodeToString(buffer.Bytes())
+	return str
 }

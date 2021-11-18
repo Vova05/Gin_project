@@ -53,25 +53,3 @@ func (trustedCompaniesLogo *TrustedCompaniesLogo)GetAllTrustedCompaniesLogo() ([
 	}
 	return allTrustedCompaniesLogo, err
 }
-
-
-//func (img1 *ImageJpg)WriteImage() []ImageJpg{
-//	//tmp_path:="2.jpg"
-//	//path :="C:\\Users\\VovaGlh\\Downloads\\"+tmp_path
-//	//m, err := os.Open(path)
-//	//if err != nil {
-//	//	log.Println(err)
-//	//}
-//	//imeg, _, err := image.Decode(m)
-//	//if err != nil {
-//	//	log.Println(err)
-//	//}
-//	//
-//	//var img image.Image = imeg
-//	//buffer := new(bytes.Buffer)
-//	//if err := jpeg.Encode(buffer, img, nil)
-//	//	err != nil {
-//	//	log.Println("unable to encode image.")
-//	//}
-//	//
-//	//return img

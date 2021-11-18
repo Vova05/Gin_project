@@ -6,6 +6,7 @@ import (
 	"Gin_project/middlewares"
 	_ "github.com/gin-gonic/contrib/secure"
 	"github.com/gin-gonic/gin"
+	gindump "github.com/tpkeeper/gin-dump"
 	"log"
 )
 func main() {
@@ -26,16 +27,54 @@ func main() {
 		server.LoadHTMLGlob("templates/*.html")
 
 
+		
 		view_page := server.Group("/view_bank",middlewares.Logger())
 		{
 			view_page.Static("/css","./templates/css")
 			view_page.Static("/js","./templates/js")
 			view_page.Static("/fonts","./templates/fonts")
 			view_page.Static("/images","./templates/images")
+
 			view_page.GET("/index",noteController.GetIndex)
 			view_page.POST("/index_save", noteController.SaveConsultation)
+			view_page.GET("/registration", noteController.GetRegistration)
+			view_page.POST("/registration_successful",noteController.SaveProfile) //добавить html файл
+
 
 		}
+		//tokenMaker, _ := token.NewPasetoMaker("")
+
+			private_page := server.Group("/private_page",gin.Recovery(),middlewares.Logger(), middlewares.BasicAuth(), gindump.Dump())
+			{
+
+					private_page.Static("/css","./templates/css")
+					private_page.Static("/js","./templates/js")
+					private_page.Static("/fonts","./templates/fonts")
+					private_page.Static("/images","./templates/images")
+
+					private_page.GET("/profile/:id",noteController.GetProfile)
+				//private_page.GET("/recordings",)
+				//private_page.POST("recordings_sent",)
+
+		}
+
+
+
+		private_page_admin := server.Group("/private_page_admin",gin.Recovery(),middlewares.Logger(), middlewares.BasicAuth2(), gindump.Dump())
+		{
+			private_page_admin.Static("/css","./templates/css")
+			private_page_admin.Static("/js","./templates/js")
+			private_page_admin.Static("/fonts","./templates/fonts")
+			private_page_admin.Static("/images","./templates/images")
+
+			private_page_admin.GET("/profile",noteController.GetProfile)
+			//private_page_admin.GET("/recordings",)
+			//private_page_admin.GET("/recordings/reply",)
+			//private_page_admin.POST("/reply_message_sent",)
+
+		}
+
+
 
 		//main_groupe := server.Group("/note",gin.Recovery(),middlewares.Logger(), middlewares.BasicAuth(), gindump.Dump())
 		//{

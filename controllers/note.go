@@ -12,9 +12,7 @@ import (
 	"net/http"
 	"os"
 )
-type  Controller struct {
 
-}
 
 func (c *Controller) Test(ctx *gin.Context){
 	var note models.Note
@@ -33,7 +31,7 @@ func (c *Controller) Test(ctx *gin.Context){
 	ctx.HTML(http.StatusOK,"header.html", dataH)
 }
 
-func (_ *Controller) GetAllNotes(c *gin.Context) {
+func (con *Controller) GetAllNotes(c *gin.Context) {
 	var note models.Note
 	notes, err := note.GetAll()
 	if err == nil {
@@ -56,21 +54,21 @@ func (_ *Controller) GetAllNotes(c *gin.Context) {
 	//		)
 
 }
-func (_ *Controller) GetSingleNote(c *gin.Context) {
-	var note models.Note
-	id := c.Param("note_id")
-	_, err := note.Fetch(id)
-	if err == nil {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Single Note",
-			"note": note,
-		})
-	} else {
-		c.String(http.StatusInternalServerError, err.Error())
-	}
-}
+//func (con *Controller) GetSingleNote(c *gin.Context) {
+//	var note models.Note
+//	id := c.Param("note_id")
+//	c, err := con.Fetch(id)
+//	if err == nil {
+//		c.JSON(http.StatusOK, gin.H{
+//			"message": "Single Note",
+//			"note": note,
+//		})
+//	} else {
+//		c.String(http.StatusInternalServerError, err.Error())
+//	}
+//}
 
-func (_ *Controller)  GetHome(c *gin.Context){
+func (con *Controller)  GetHome(c *gin.Context){
 	var commercialOffer models.CommercialOffers
 	commercialOffers, err := commercialOffer.GetAllCommercialOffers()
 	if err == nil {
@@ -85,8 +83,9 @@ func (_ *Controller)  GetHome(c *gin.Context){
 	}
 }
 
-func (_ *Controller) SaveConsultation(c *gin.Context){
+func (con *Controller) SaveConsultation(c *gin.Context){
 //r.FormValue()
+
 	name, _ := c.GetPostForm("Name")
 	phone, _ := c.GetPostForm("Phone")
 	message, _ := c.GetPostForm("Message")
@@ -103,7 +102,7 @@ func (_ *Controller) SaveConsultation(c *gin.Context){
 }
 
 
-func (_ *Controller) CreateNewNote(c *gin.Context) {
+func (con *Controller) CreateNewNote(c *gin.Context) {
 	var params models.NoteParams
 	var note models.Note
 	err := c.BindJSON(&params)

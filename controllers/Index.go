@@ -6,8 +6,10 @@ import (
 	"log"
 	"net/http"
 )
+type Controller struct {
 
-func (_ *Controller)  GetIndex(c *gin.Context){
+}
+func (con *Controller)  GetIndex(c *gin.Context){
 	var image models.TrustedCompaniesLogo
 	var CustomerReview models.CustomerReview
 	images, err := image.GetAllTrustedCompaniesLogo()
